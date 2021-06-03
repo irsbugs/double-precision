@@ -1,0 +1,159 @@
+; double-precision
+; A script file for the Alpha simh.
+;
+echo
+echo Alpha double precision demonstration Using the instruction
+echo CVTTQ Opcode: 16.0BE Description: Convert quadword to T_floating
+echo Note that T_floating is IEEE 754 double precision floating point. 
+echo
+echo CVTQT R0,R1 = 5BE017C1 
+echo Universal NOP = LDQ_U R31,0(R31) = 2FFF0000 
+echo
+
+echo Deposit  1000 2FFF00005BE017C1
+d 1000 2FFF00005BE017C1
+echo Deposit register F0 1
+d f0 1
+d f1 0
+
+go 1000 until 1008
+echo Register F1 contains the Floating Point value of Register F0
+e f0:f1
+
+echo
+echo Deposit register F0 2
+d f0 2
+d f1 0
+
+go 1000 until 1008
+e f0:f1
+
+echo
+echo Deposit register F0 3
+d f0 3
+d f1 0
+
+go 1000 until 1008
+e f0:f1
+
+echo
+echo Deposit register F0 -1 FFFFFFFFFFFFFFFF
+d f0 FFFFFFFFFFFFFFFF
+d f1 0
+
+go 1000 until 1008
+e f0:f1
+
+echo
+echo Deposit register F0 -2 FFFFFFFFFFFFFFFE
+d f0 FFFFFFFFFFFFFFFE
+d f1 0
+
+go 1000 until 1008
+e f0:f1
+
+echo
+echo Deposit register F0 -3 FFFFFFFFFFFFFFFD
+d f0 FFFFFFFFFFFFFFFD
+d f1 0
+
+go 1000 until 1008
+e f0:f1
+
+echo
+echo Deposit register F0 0
+d f0 0
+d f1 0
+
+go 1000 until 1008
+e f0:f1
+
+echo
+echo Deposit register F0 7FFFFFFFFFFFFFFF - Max positive 64 bit integer 9.22 * 10^18
+d f0 7FFFFFFFFFFFFFFF
+d f1 0
+
+go 1000 until 1008
+e f0:f1
+
+echo
+echo Deposit register F0 8000000000000000 - Max negative 64 bit integer -9.22 * 10^18
+d f0 8000000000000000
+d f1 0
+
+go 1000 until 1008
+e f0:f1
+
+exit
+
+
+; Console output...
+; $ alpha double-precision
+; 
+; Alpha simulator V4.0-0 Current        git commit id: e7169d48
+; 
+; Alpha double precision demonstration Using the instruction
+; CVTTQ Opcode: 16.0BE Description: Convert quadword to T_floating
+; Note that T_floating is IEEE 754 double precision floating point.
+; 
+; CVTQT R0,R1 = 5BE017C1
+; Universal NOP = LDQ_U R31,0(R31) = 2FFF0000
+; 
+; Deposit  1000 2FFF00005BE017C1
+; Deposit register F0 1
+; 
+; Breakpoint, PC: 1008 (0000000000000000)
+; Register F1 contains the Floating Point value of Register F0
+; F0:	0000000000000001
+; F1:	3FF0000000000000
+; 
+; Deposit register F0 2
+; 
+; Breakpoint, PC: 1008 (0000000000000000)
+; F0:	0000000000000002
+; F1:	4000000000000000
+; 
+; Deposit register F0 3
+; 
+; Breakpoint, PC: 1008 (0000000000000000)
+; F0:	0000000000000003
+; F1:	4008000000000000
+; 
+; Deposit register F0 -1 FFFFFFFFFFFFFFFF
+; 
+; Breakpoint, PC: 1008 (0000000000000000)
+; F0:	FFFFFFFFFFFFFFFF
+; F1:	BFF0000000000000
+; 
+; Deposit register F0 -2 FFFFFFFFFFFFFFFE
+; 
+; Breakpoint, PC: 1008 (0000000000000000)
+; F0:	FFFFFFFFFFFFFFFE
+; F1:	C000000000000000
+; 
+; Deposit register F0 -3 FFFFFFFFFFFFFFFD
+; 
+; Breakpoint, PC: 1008 (0000000000000000)
+; F0:	FFFFFFFFFFFFFFFD
+; F1:	C008000000000000
+; 
+; Deposit register F0 0
+; 
+; Breakpoint, PC: 1008 (0000000000000000)
+; F0:	0000000000000000
+; F1:	0000000000000000
+;
+; Deposit register F0 7FFFFFFFFFFFFFFF - Max positive 64 bit integer
+;
+; Breakpoint, PC: 1008 (0000000000000000)
+; F0:	7FFFFFFFFFFFFFFF
+; F1:	43E0000000000000
+;
+; Deposit register F0 8000000000000000 - Max negative 64 bit integer
+;
+; Breakpoint, PC: 1008 (0000000000000000)
+; F0:	8000000000000000
+; F1:	C3E0000000000000
+;
+; Goodbye
+; 
